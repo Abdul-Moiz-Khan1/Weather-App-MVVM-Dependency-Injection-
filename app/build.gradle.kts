@@ -62,4 +62,5 @@ dependencies {
 // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }
