@@ -16,9 +16,8 @@ import com.example.weatherappmvvmdi.data.repository.WeatherRepository
 import com.example.weatherappmvvmdi.data.viewModel.WeatherViewModel
 import jakarta.inject.Inject
 
-class MyAdapter(private val response: Weather, private val context: Context) :
+class MyAdapter(private val response: Weather?, private val context: Context) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val temp: TextView = itemView.findViewById(R.id.rec_temp)
@@ -34,13 +33,23 @@ class MyAdapter(private val response: Weather, private val context: Context) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.temp.text = "${response.forecast.forecastday[0].hour[position].temp_c.toInt()}°C"
-        Glide.with(context)
-            .load("https:${response.forecast.forecastday[0].hour[position].condition.icon}")
-            .into(holder.img)
-        holder.time.text = response.forecast.forecastday[0].hour[position].time.toString().takeLast(5)
+        if (response != null) {
+            holder.temp.text = "${response.forecast.forecastday[0].hour[position].temp_c.toInt()}°"
+            Glide.with(context)
+                .load("https:${response.forecast.forecastday[0].hour[position].condition.icon}")
+                .error(R.drawable.default_img)
+                .into(holder.img)
+
+            holder.time.text =
+                response.forecast.forecastday[0].hour[position].time.toString().takeLast(5)
+        }
 
     }
 
-    override fun getItemCount(): Int = response.forecast.forecastday[0].hour.size
+    override fun getItemCount(): Int {
+        if (response != null) {
+            return response.forecast.forecastday[0].hour.size
+        }
+        return 0
+    }
 }

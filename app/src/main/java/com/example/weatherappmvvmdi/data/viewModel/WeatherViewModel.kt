@@ -14,13 +14,14 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(private val repository: WeatherRepository) :
     ViewModel() {
-    private val _forcast = MutableLiveData<Weather>()
-    val forecast: LiveData<Weather> = _forcast
+    private val _forcast = MutableLiveData<Weather?>()
+    val forecast: LiveData<Weather?> = _forcast
 
     fun loadForcast(city: String , days: Int) {
             viewModelScope.launch {
                 try {
                     val data = repository.getForecast(city, days)
+                    Log.d("CatchError,inViewModel", data.toString())
                     _forcast.value = data
                 } catch (e: Exception) {
                     Log.e("eror", "Error: ${e.message}")

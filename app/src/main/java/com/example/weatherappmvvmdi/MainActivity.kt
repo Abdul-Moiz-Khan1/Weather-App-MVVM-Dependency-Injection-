@@ -1,6 +1,7 @@
 package com.example.weatherappmvvmdi
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.SearchView
 import androidx.activity.viewModels
@@ -31,15 +32,37 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
 
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return try {
+                    viewModel.loadForcast(p0.toString(), 2)
+                    true
+                } catch (e: Exception) {
+                    Log.e("CatchError,inQueryCatch", e.message.toString())
+                    true
+                }
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+        })
+
         viewModel.forecast.observe(this) { response ->
-            binding.recView.adapter = MyAdapter(response, this)
-            Glide.with(this)
-                .load("https:${response.current.condition.icon}")
-                .into(binding.dayImg)
-            binding.temp.text = "${response.current.temp_c}°C"
-            binding.minMaxTemp.text =
-                "Max: ${response.forecast.forecastday[0].day.maxtemp_c}° Min:${response.forecast.forecastday[0].day.mintemp_c}°"
-            binding.date.text = response.forecast.forecastday[0].date
+            Log.d("CatchError,inMainAct", response.toString())
+            if (response != null) {
+                binding.recView.adapter = MyAdapter(response, this)
+                Glide.with(this)
+                    .load("https:${response.current.condition.icon}")
+                    .error(R.drawable.default_img)
+                    .into(binding.dayImg)
+                binding.city.text = response.location.name
+                binding.weatherStatus.text = response.current.condition.text
+                binding.temp.text = "${response.current.temp_c}°C"
+                binding.minMaxTemp.text =
+                    "Max: ${response.forecast.forecastday[0].day.maxtemp_c.toInt()}° Min:${response.forecast.forecastday[0].day.mintemp_c.toInt()}°"
+                binding.date.text = response.forecast.forecastday[0].date
+            }
 
         }
         viewModel.loadForcast("rawalpindi", 2)

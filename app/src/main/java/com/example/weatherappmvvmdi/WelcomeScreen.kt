@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.content.edit
@@ -15,6 +16,8 @@ class WelcomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome_screen)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.grad_grey)
 
         val sharedPreferences = getSharedPreferences("MyPrefs" , MODE_PRIVATE)
 

@@ -12,6 +12,7 @@
         android:id="@+id/rec_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@color/white"
@@ -19,7 +20,7 @@
 
     <ImageView
         android:id="@+id/rec_img"
-        android:layout_width="60dp"
+        android:layout_width="70dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
         android:src="@drawable/sunny_rainy" />
@@ -28,6 +29,7 @@
         android:id="@+id/rec_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@color/white"
