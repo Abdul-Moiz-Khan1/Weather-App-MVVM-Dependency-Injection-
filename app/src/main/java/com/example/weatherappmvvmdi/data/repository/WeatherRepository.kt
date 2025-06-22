@@ -18,9 +18,13 @@ class WeatherRepository @Inject constructor(
             return response
         } catch (e: Exception) {
             Log.d("CatchError,inCatch", e.message.toString())
-            val response = dao.getCacheWeather()
-            Log.d("CatchError,inCatch,dbData", response.toString())
-            return response
+            return getCachedData()
+
         }
+    }
+
+    suspend fun getCachedData(): Weather? {
+        val response = dao.getCacheWeather()
+        return response
     }
 }

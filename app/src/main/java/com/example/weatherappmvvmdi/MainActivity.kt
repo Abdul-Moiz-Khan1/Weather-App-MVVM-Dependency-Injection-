@@ -1,5 +1,6 @@
 package com.example.weatherappmvvmdi
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -20,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: WeatherViewModel by viewModels()
-
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +28,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.seeForecast.setOnClickListener {
+            startActivity(Intent(this, ForeCastActivity::class.java))
+        }
+
         binding.recView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return try {
                     viewModel.loadForcast(p0.toString(), 2)
+                    binding.searchView.setQuery("" , false)
+                    binding.searchView.clearFocus()
                     true
                 } catch (e: Exception) {
                     Log.e("CatchError,inQueryCatch", e.message.toString())

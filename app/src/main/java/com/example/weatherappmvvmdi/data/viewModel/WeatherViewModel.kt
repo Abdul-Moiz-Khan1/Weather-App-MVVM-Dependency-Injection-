@@ -17,15 +17,27 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
     private val _forcast = MutableLiveData<Weather?>()
     val forecast: LiveData<Weather?> = _forcast
 
-    fun loadForcast(city: String , days: Int) {
-            viewModelScope.launch {
-                try {
-                    val data = repository.getForecast(city, days)
-                    Log.d("CatchError,inViewModel", data.toString())
-                    _forcast.value = data
-                } catch (e: Exception) {
-                    Log.e("eror", "Error: ${e.message}")
-                }
+    fun loadForcast(city: String, days: Int) {
+        viewModelScope.launch {
+            try {
+                val data = repository.getForecast(city, days)
+                Log.d("CatchError,inViewModel", data.toString())
+                _forcast.value = data
+            } catch (e: Exception) {
+                Log.e("eror", "Error: ${e.message}")
             }
+        }
+    }
+
+    fun loadCacheData() {
+        viewModelScope.launch {
+            try {
+                val data = repository.getCachedData()
+                _forcast.value = data
+                Log.d("CatchError,inViewModel", data.toString())
+            } catch (e: Exception) {
+                Log.d("CatchError,inViewModel", e.message.toString())
+            }
+        }
     }
 }
