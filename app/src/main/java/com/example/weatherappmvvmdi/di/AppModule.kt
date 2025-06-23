@@ -30,6 +30,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     fun providesApi(retrofit: Retrofit): ApiInterface {
         return retrofit.create(ApiInterface::class.java)
     }

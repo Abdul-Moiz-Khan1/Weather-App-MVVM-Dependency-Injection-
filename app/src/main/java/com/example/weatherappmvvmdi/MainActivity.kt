@@ -1,11 +1,13 @@
 package com.example.weatherappmvvmdi
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.SearchView
 import androidx.activity.viewModels
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import com.example.weatherappmvvmdi.adapter.MyAdapter
 import com.example.weatherappmvvmdi.databinding.ActivityMainBinding
 import com.example.weatherappmvvmdi.data.model.ListItem
 import com.example.weatherappmvvmdi.data.viewModel.WeatherViewModel
+import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -22,11 +25,12 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: WeatherViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
+   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.grad_grey)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         binding.seeForecast.setOnClickListener {
             startActivity(Intent(this, ForeCastActivity::class.java))
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return try {
-                    viewModel.loadForcast(p0.toString(), 2)
+                    viewModel.loadForcast(p0.toString(), 7)
                     binding.searchView.setQuery("" , false)
                     binding.searchView.clearFocus()
                     true
@@ -70,8 +74,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        viewModel.loadForcast("rawalpindi", 2)
-
+        viewModel.loadForcast("rawalpindi", 7)
 
     }
 }

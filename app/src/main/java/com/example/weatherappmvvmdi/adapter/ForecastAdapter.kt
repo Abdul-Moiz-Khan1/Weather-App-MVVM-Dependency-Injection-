@@ -17,6 +17,7 @@ class ForecastAdapter(private val response: Weather?, private val context: Conte
         val temp = itemView.findViewById<TextView>(R.id.forecast_temp)
         val day = itemView.findViewById<TextView>(R.id.forecast_day)
         val img = itemView.findViewById<ImageView>(R.id.forecast_img)
+        val condition = itemView.findViewById<TextView>(R.id.forecast_condition)
     }
 
 
@@ -35,11 +36,12 @@ class ForecastAdapter(private val response: Weather?, private val context: Conte
     ) {
         if (response != null) {
             holder.temp.text = "${response.forecast.forecastday[position].day.avgtemp_c.toInt()}°"
-            holder.day.text = response.forecast.forecastday[position].date
+            holder.day.text = response.forecast.forecastday[position].date.toString().drop(5)
             Glide.with(context)
                 .load("https:${response.forecast.forecastday[position].day.condition.icon}")
                 .error(R.drawable.default_img)
                 .into(holder.img)
+            holder.condition.text = response.forecast.forecastday[position].day.condition.text
 
         }
 
