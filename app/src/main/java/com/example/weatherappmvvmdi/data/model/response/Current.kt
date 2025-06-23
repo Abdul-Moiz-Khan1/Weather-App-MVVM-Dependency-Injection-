@@ -1,6 +1,6 @@
 package com.example.weatherappmvvmdi.data.model.response
 
-data class Current(
+data class  Current(
     val cloud: Int,
     val condition: Condition,
     val dewpoint_c: Double,
