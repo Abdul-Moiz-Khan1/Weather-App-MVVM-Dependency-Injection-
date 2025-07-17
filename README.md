@@ -57,6 +57,20 @@ Exposes data via LiveData or StateFlow for the Activity/Fragment to observe and 
 5. Dependency Injection: 
 All services (API, Dao, Repository) are provided via DI (Hilt/Dagger).
 
+## Screenshots
+Following are the screenshots showing UI and flow of app 
+
+<p align="center">
+<img width="250" height="500" alt="weather_splash" src="https://github.com/user-attachments/assets/92f17c0b-7581-46f0-83e1-3135a0f91ccb" />
+</p>
+
+<p align="center">
+<img width="250" height="500" alt="weather_main" src="https://github.com/user-attachments/assets/8b7d3aae-d2b8-44c4-b227-77fc5fd3d0c4" />
+</p>
+
+
+
+
 
 
 
